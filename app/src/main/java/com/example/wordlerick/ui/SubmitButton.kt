@@ -7,11 +7,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SubmitButton(isEnabled: Boolean) {
+fun SubmitButton(isEnabled: Boolean, onClick: () -> Unit) {
     Button(
-        onClick = { /* logica submit */ },
-        enabled = isEnabled,
-        modifier = Modifier.fillMaxWidth().padding(16.dp)
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        enabled = isEnabled
     ) {
         Text("Submit")
     }

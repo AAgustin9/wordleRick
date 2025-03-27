@@ -9,13 +9,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SelectionOptions(
     onCharacterNameSelected: (String) -> Unit,
-    onSpeciesSelected: (String) -> Unit,
-    onOriginSelected: (String) -> Unit,
+    onAgeSelected: (String) -> Unit,
+    onRaceSelected: (String) -> Unit,
     updateButtonState: (Boolean) -> Unit
 ) {
     var characterName by remember { mutableStateOf("") }
-    var species by remember { mutableStateOf("") }
-    var origin by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf("") }
+    var race by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
 
@@ -24,7 +24,7 @@ fun SelectionOptions(
             onValueChange = {
                 characterName = it
                 onCharacterNameSelected(it)
-                updateButtonState(characterName.isNotEmpty() && species.isNotEmpty() && origin.isNotEmpty())
+                updateButtonState(characterName.isNotEmpty() && age.isNotEmpty() && race.isNotEmpty())
             },
             label = { Text("Character Name") },
             modifier = Modifier.fillMaxWidth()
@@ -33,26 +33,26 @@ fun SelectionOptions(
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = species,
+            value = age,
             onValueChange = {
-                species = it
-                onSpeciesSelected(it)
-                updateButtonState(characterName.isNotEmpty() && species.isNotEmpty() && origin.isNotEmpty())
+                age = it
+                onAgeSelected(it)
+                updateButtonState(characterName.isNotEmpty() && age.isNotEmpty() && race.isNotEmpty())
             },
-            label = { Text("Species") },
+            label = { Text("Age") },
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = origin,
+            value = race,
             onValueChange = {
-                origin = it
-                onOriginSelected(it)
-                updateButtonState(characterName.isNotEmpty() && species.isNotEmpty() && origin.isNotEmpty())
+                race = it
+                onRaceSelected(it)
+                updateButtonState(characterName.isNotEmpty() && age.isNotEmpty() && race.isNotEmpty())
             },
-            label = { Text("Origin") },
+            label = { Text("Race") },
             modifier = Modifier.fillMaxWidth()
         )
     }
