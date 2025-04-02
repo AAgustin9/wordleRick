@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
-import androidx.compose.foundation.layout.Arrangement.Vertical
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -53,13 +52,14 @@ fun QuestionCard(imageRes: Int, question: String) {
         colors = CardDefaults.cardColors(containerColor = DarkBlue)
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(bottom = 15.dp)
         ) {
             Text(
                 text = question,
                 fontSize = 20.sp,
                 color = Color.White,
-                modifier = Modifier.padding(14.dp).fillMaxWidth(),
+                modifier = Modifier.padding(12.dp).fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
             Card(

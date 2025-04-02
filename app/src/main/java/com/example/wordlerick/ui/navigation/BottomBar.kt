@@ -3,6 +3,7 @@ package com.example.wordlerick.ui.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Badge
@@ -18,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Person
 
 @Composable
@@ -25,7 +27,7 @@ fun BottomBar(
     onNavigate: (String) -> Unit,
 ) {
     val homeTab = TabBarItem(title = WordleRickScreen.Home.name, selectedIcon = Icons.Filled.Home, unselectedIcon = Icons.Outlined.Home)
-    val rankingTab = TabBarItem(title = WordleRickScreen.Wiki.name, selectedIcon = Icons.Filled.Favorite, unselectedIcon = Icons.Outlined.Favorite)
+    val rankingTab = TabBarItem(title = WordleRickScreen.Wiki.name, selectedIcon = Icons.Filled.Info, unselectedIcon = Icons.Outlined.Info)
     val profileTab = TabBarItem(title = WordleRickScreen.User.name, selectedIcon = Icons.Filled.Person, unselectedIcon = Icons.Outlined.Person)
 
     val tabBarItems = listOf(homeTab, rankingTab, profileTab)
