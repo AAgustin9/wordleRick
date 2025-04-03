@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.wordlerick.ui.navigation.BottomBar
 import com.example.wordlerick.ui.navigation.NavHostComposable
+import com.example.wordlerick.ui.screens.GameApp
 import com.example.wordlerick.ui.screens.GameScreen
 import com.example.wordlerick.ui.theme.DarkPrimary
 import com.example.wordlerick.ui.theme.WordleRickTheme
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     WordleRickTheme {
-        GameScreen()
+        GameApp()
     }
 }
 

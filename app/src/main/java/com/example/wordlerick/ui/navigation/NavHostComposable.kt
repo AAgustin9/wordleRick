@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.wordlerick.ui.screens.GameApp
 import com.example.wordlerick.ui.screens.GameScreen
 import com.example.wordlerick.ui.screens.WikiScreen
 
@@ -20,7 +21,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         modifier = Modifier.fillMaxSize().padding(innerPadding).padding(20.dp)
     ) {
         composable(route = WordleRickScreen.Home.name) {
-            GameScreen()
+            GameApp()
         }
 
         composable(route = WordleRickScreen.Wiki.name) {
