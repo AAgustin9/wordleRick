@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.rememberNavController
 import com.example.wordlerick.ui.navigation.BottomBar
 import com.example.wordlerick.ui.navigation.NavHostComposable
@@ -17,8 +18,10 @@ import com.example.wordlerick.ui.screens.GameApp
 import com.example.wordlerick.ui.screens.GameScreen
 import com.example.wordlerick.ui.theme.DarkPrimary
 import com.example.wordlerick.ui.theme.WordleRickTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

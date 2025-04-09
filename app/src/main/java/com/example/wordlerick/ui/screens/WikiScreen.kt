@@ -18,11 +18,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wordlerick.R
 
 val mockCharacters = listOf(
-        ShowCharacter(1, "Rick Sanchez", R.drawable.morty),
+        ShowCharacter(1, "Rick Sanchez", R.drawable.rick),
         ShowCharacter(2, "Morty Smith", R.drawable.morty),
-        ShowCharacter(3, "Summer Smith", R.drawable.morty),
-        ShowCharacter(4, "Beth Smith", R.drawable.morty),
-        ShowCharacter(5, "Jerry Smith", R.drawable.morty),
+        ShowCharacter(3, "Summer Smith", R.drawable.summer),
+        ShowCharacter(4, "Beth Smith", R.drawable.beth),
+        ShowCharacter(5, "Jerry Smith", R.drawable.jerry),
         ShowCharacter(6, "Birdperson", R.drawable.morty),
         ShowCharacter(7, "Squanchy", R.drawable.morty),
         ShowCharacter(8, "Mr. Meeseeks", R.drawable.morty),
