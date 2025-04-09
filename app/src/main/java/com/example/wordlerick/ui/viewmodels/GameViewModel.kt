@@ -17,11 +17,11 @@ class GameViewModel : ViewModel() {
         ShowCharacter(3, "Summer Smith", R.drawable.summer),
         ShowCharacter(4, "Beth Smith", R.drawable.beth),
         ShowCharacter(5, "Jerry Smith", R.drawable.jerry),
-        ShowCharacter(6, "Birdperson", R.drawable.morty),
-        ShowCharacter(7, "Squanchy", R.drawable.morty),
-        ShowCharacter(8, "Mr. Meeseeks", R.drawable.morty),
+        ShowCharacter(6, "Birdperson", R.drawable.birdperson),
+        ShowCharacter(7, "Squanchy", R.drawable.squanchy),
+        ShowCharacter(8, "Mr. Meeseeks", R.drawable.meeseeks),
         ShowCharacter(9, "Evil Morty", R.drawable.morty),
-        ShowCharacter(10, "Mr. Poopybutthole", R.drawable.morty)
+        ShowCharacter(10, "Mr. Poopybutthole", R.drawable.poopy)
     )
 
     // Game state
