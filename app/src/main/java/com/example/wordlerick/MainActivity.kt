@@ -1,7 +1,6 @@
 package com.example.wordlerick
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
@@ -15,8 +14,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.wordlerick.ui.navigation.BottomBar
 import com.example.wordlerick.ui.navigation.NavHostComposable
 import com.example.wordlerick.ui.screens.GameApp
-import com.example.wordlerick.ui.screens.GameScreen
-import com.example.wordlerick.ui.theme.DarkPrimary
 import com.example.wordlerick.ui.theme.WordleRickTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,7 +39,7 @@ class MainActivity : FragmentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainActivityPreview() {
     WordleRickTheme {
         GameApp()
     }

@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import com.example.wordlerick.R
 import com.example.wordlerick.ui.screens.QuizQuestion
 import com.example.wordlerick.ui.screens.ShowCharacter
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 import kotlin.random.Random
 
-class GameViewModel : ViewModel() {
+@HiltViewModel
+class GameViewModel @Inject constructor() : ViewModel() {
     // Mock list of all characters in the game
     private val allCharacters = listOf(
         ShowCharacter(1, "Rick Sanchez", R.drawable.rick),
