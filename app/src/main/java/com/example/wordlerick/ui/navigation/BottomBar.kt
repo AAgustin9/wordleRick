@@ -13,26 +13,29 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Person
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.wordlerick.ui.viewmodels.NavigationViewModel
 
 @Composable
 fun BottomBar(
     onNavigate: (String) -> Unit,
+    viewModel: NavigationViewModel = viewModel()
 ) {
+    val selectedTabIndex by viewModel.selectedTabIndex.collectAsState()
+
     val homeTab = TabBarItem(title = WordleRickScreen.Home.name, selectedIcon = Icons.Filled.Home, unselectedIcon = Icons.Outlined.Home)
     val rankingTab = TabBarItem(title = WordleRickScreen.Wiki.name, selectedIcon = Icons.Filled.Info, unselectedIcon = Icons.Outlined.Info)
     val profileTab = TabBarItem(title = WordleRickScreen.User.name, selectedIcon = Icons.Filled.Person, unselectedIcon = Icons.Outlined.Person)
 
     val tabBarItems = listOf(homeTab, rankingTab, profileTab)
 
-    TabView(tabBarItems, onNavigate)
+    TabView(tabBarItems, selectedTabIndex, onNavigate, viewModel)
 }
 
 data class TabBarItem(
@@ -43,17 +46,18 @@ data class TabBarItem(
 )
 
 @Composable
-fun TabView(tabBarItems: List<TabBarItem>, onNavigate: (String) -> Unit) {
-    var selectedTabIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
-
+fun TabView(
+    tabBarItems: List<TabBarItem>,
+    selectedTabIndex: Int,
+    onNavigate: (String) -> Unit,
+    viewModel: NavigationViewModel
+) {
     NavigationBar {
         tabBarItems.forEachIndexed { index, tabBarItem ->
             NavigationBarItem(
                 selected = selectedTabIndex == index,
                 onClick = {
-                    selectedTabIndex = index
+                    viewModel.onTabSelected(index)
                     onNavigate(tabBarItem.title)
                 },
                 icon = {

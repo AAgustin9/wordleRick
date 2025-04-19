@@ -1,0 +1,3 @@
+<resources>
+    <string name="characters_url">https://rickandmortyapi.com/api/character</string>
+</resources>
