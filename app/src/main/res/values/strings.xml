@@ -1,4 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wordle Rick</string>
     <string name="name">Rick Sanchez</string>
+    
+    <!-- Navigation -->
+    <string name="home">Home</string>
+    <string name="wiki">Wiki</string>
+    <string name="user">User</string>
+    
+    <!-- User Profile -->
+    <string name="profile_picture">Profile Picture</string>
+    <string name="about">About</string>
+    <string name="location">Location</string>
+    
+    <!-- Game -->
+    <string name="who_is_this_character">Who is this character?</string>
+    <string name="game_over">Game Over!</string>
+    <string name="your_score">Your Score</string>
+    <string name="play_again">Play Again</string>
+    <string name="cant_get_characters">Can\'t get characters</string>
 </resources>

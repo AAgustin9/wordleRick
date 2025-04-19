@@ -9,12 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.wordlerick.R
 import com.example.wordlerick.ui.viewmodels.UserViewModel
 
 @Composable
@@ -24,23 +26,23 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(dimensionResource(id = R.dimen.spacing_16)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Profile Picture
         Card(
-            modifier = Modifier.size(120.dp),
+            modifier = Modifier.size(dimensionResource(id = R.dimen.profile_picture_size)),
             shape = CircleShape
         ) {
             Image(
                 painter = painterResource(id = userProfile.profilePicture),
-                contentDescription = "Profile Picture",
+                contentDescription = stringResource(id = R.string.profile_picture),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_16)))
 
         // Name
         Text(
@@ -57,7 +59,7 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
 
         // Location
         Row(
@@ -71,7 +73,7 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
 
         // Bio
         Card(
@@ -81,15 +83,15 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
             )
         ) {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.card_padding))
             ) {
                 Text(
-                    text = "About",
+                    text = stringResource(id = R.string.about),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_8)))
                 Text(
                     text = userProfile.bio,
                     style = MaterialTheme.typography.bodyMedium,

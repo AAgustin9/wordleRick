@@ -16,11 +16,11 @@ class UserViewModel @Inject constructor() : ViewModel() {
 
     private fun createMockUserProfile(): UserProfile {
         return UserProfile(
-            name = "John Foo",
-            email = "johnfoo@gmail.com",
-            profilePicture = R.drawable.morty,
-            bio = "Passionate Android Developer with 5+ years of experience in building beautiful and functional mobile applications. Currently working on exciting projects at TechCorp.",
-            location = "San Francisco, CA"
+            name = "Rick Sanchez",
+            email = "rick@gmail.com",
+            profilePicture = R.drawable.rick,
+            bio = "I need to find Morty, and I need to find him fast!",
+            location = "Earth C-137"
         )
     }
 } 
