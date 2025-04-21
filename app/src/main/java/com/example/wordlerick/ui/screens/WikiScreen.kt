@@ -1,6 +1,7 @@
 package com.example.wordlerick.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
@@ -20,7 +21,10 @@ import coil3.compose.rememberAsyncImagePainter
 import androidx.compose.material3.TextFieldDefaults
 
 @Composable
-fun WikiScreen(viewModel: ApiViewModel = hiltViewModel()) {
+fun WikiScreen(
+    viewModel: ApiViewModel = hiltViewModel(),
+    onCharacterClick: (Character) -> Unit
+) {
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     val filteredCharacters by viewModel.filteredCharacters.collectAsStateWithLifecycle()
     val loading by viewModel.loading.collectAsStateWithLifecycle()
@@ -45,7 +49,10 @@ fun WikiScreen(viewModel: ApiViewModel = hiltViewModel()) {
                 Text("Retry")
             }
         } else {
-            CharacterList(filteredCharacters)
+            CharacterList(
+                characters = filteredCharacters,
+                onCharacterClick = onCharacterClick
+            )
         }
     }
 }
@@ -67,18 +74,30 @@ fun SearchBar(searchQuery: TextFieldValue, onQueryChange: (TextFieldValue) -> Un
 }
 
 @Composable
-fun CharacterList(characters: List<Character>) {
+fun CharacterList(
+    characters: List<Character>,
+    onCharacterClick: (Character) -> Unit
+) {
     LazyColumn {
         items(characters.size) { index ->
-            CharacterCard(characters[index])
+            CharacterCard(
+                character = characters[index],
+                onClick = { onCharacterClick(characters[index]) }
+            )
         }
     }
 }
 
 @Composable
-fun CharacterCard(character: Character) {
+fun CharacterCard(
+    character: Character,
+    onClick: () -> Unit
+) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable(onClick = onClick),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
