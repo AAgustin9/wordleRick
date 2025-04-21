@@ -20,6 +20,9 @@ class ApiViewModel @Inject constructor(
     private var _characters = MutableStateFlow(listOf<Character>())
     val characters = _characters.asStateFlow()
 
+    private var _filteredCharacters = MutableStateFlow(listOf<Character>())
+    val filteredCharacters = _filteredCharacters.asStateFlow()
+
     private var _loading = MutableStateFlow(true)
     val loading = _loading.asStateFlow()
 
@@ -34,6 +37,19 @@ class ApiViewModel @Inject constructor(
         loadCharacters()
     }
 
+    fun filterCharacters(query: String) {
+        viewModelScope.launch {
+            if (query.isEmpty()) {
+                _filteredCharacters.emit(_characters.value)
+            } else {
+                val filtered = _characters.value.filter { character ->
+                    character.name.contains(query, ignoreCase = true)
+                }
+                _filteredCharacters.emit(filtered)
+            }
+        }
+    }
+
     private fun loadCharacters() {
         _loading.value = true
         apiService.getCharacters(
@@ -41,6 +57,7 @@ class ApiViewModel @Inject constructor(
             onSuccess = {
                 viewModelScope.launch {
                     _characters.emit(it)
+                    _filteredCharacters.emit(it)
                 }
                 _showRetry.value = false
             },
