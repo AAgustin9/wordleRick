@@ -17,7 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.wordlerick.api.ApiViewModel
 import com.example.wordlerick.api.Character
-import coil.compose.rememberAsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 
 //val mockCharacters = listOf(
 //        ShowCharacter(1, "Rick Sanchez", R.drawable.rick),

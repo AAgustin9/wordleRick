@@ -5,6 +5,6 @@ import retrofit.http.GET
 import com.example.wordlerick.api.Character
 
 interface ApiService {
-    @GET("characters")
+    @GET("character")
     fun getCharacters(): Call<List<Character>>
 }
