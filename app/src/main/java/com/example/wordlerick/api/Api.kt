@@ -1,6 +1,5 @@
 package com.example.wordlerick.api
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,11 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImage
 
 @Composable
 fun Api() {
@@ -72,9 +71,9 @@ fun CharacterCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(
-                painter = painterResource(character.image.length),
-                contentDescription = "Character image",
+            AsyncImage(
+                model = character.image,
+                contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.size(60.dp),
             )

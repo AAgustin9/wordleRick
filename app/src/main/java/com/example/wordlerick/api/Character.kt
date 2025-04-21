@@ -3,7 +3,7 @@ package com.example.wordlerick.api
 import com.google.gson.annotations.SerializedName
 
 data class CharacterListResponse(
-    @SerializedName("characters") val teams: List<Character> = listOf()
+    @SerializedName("results") val teams: List<Character> = listOf()
 )
 
 data class Character(

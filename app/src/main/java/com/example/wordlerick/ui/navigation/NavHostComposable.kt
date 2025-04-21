@@ -32,10 +32,6 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         composable(route = WordleRickScreen.User.name) {
             UserScreen()
         }
-
-        composable(route = WordleRickScreen.API.name) {
-            Api()
-        }
     }
 
 }
