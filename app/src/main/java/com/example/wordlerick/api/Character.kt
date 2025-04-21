@@ -1,7 +1,9 @@
 package com.example.wordlerick.api
 
-data class CharacterResponse(
-    val results: List<Character>
+import com.google.gson.annotations.SerializedName
+
+data class CharacterListResponse(
+    @SerializedName("characters") val teams: List<Character> = listOf()
 )
 
 data class Character(
@@ -13,7 +15,7 @@ data class Character(
     val gender: String,
     val origin: Origin,
     val location: Location,
-    val image: String,
+    val image: String, //te da un link a la imagen, le haces un get y te devuelve la imagen
     val episode: List<String>,
     val url: String,
     val created: String,

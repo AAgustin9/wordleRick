@@ -9,6 +9,7 @@ import javax.inject.Inject
 import retrofit.GsonConverterFactory
 import com.example.wordlerick.R
 import com.example.wordlerick.api.Character
+import com.example.wordlerick.api.CharacterListResponse
 import retrofit.Call
 
 class ApiServiceImpl @Inject constructor() {
@@ -28,21 +29,22 @@ class ApiServiceImpl @Inject constructor() {
             )
             .build()
 
-        val service: ApiService = retrofit.create(ApiService::class.java)
+        val apiService: ApiService = retrofit.create(ApiService::class.java)
 
-        val call: Call<List<Character>> = service.getCharacters()
+        val call: Call<CharacterListResponse> = apiService.getCharacters()
 
-        call.enqueue(object : Callback<List<Character>> {
-            override fun onResponse(response: Response<List<Character>>?, retrofit: Retrofit?) {
+        call.enqueue(object : Callback<CharacterListResponse> {
+            override fun onResponse(response: Response<CharacterListResponse>?, retrofit: Retrofit?) {
                 loadingFinished()
-                if (response != null) {
-                    if (response.isSuccess) {
-                        val characters: List<Character> = response.body()
-                        onSuccess(characters)
+                if (response?.isSuccess == true) {
+                    val responseData = response.body()
+                    if (responseData != null) {
+                        onSuccess(responseData.teams)
                     } else {
                         onFailure(Exception("Bad request"))
                     }
                 }
+                loadingFinished()
             }
 
             override fun onFailure(t: Throwable?) {
