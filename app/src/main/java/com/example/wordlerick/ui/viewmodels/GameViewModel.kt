@@ -1,33 +1,25 @@
 package com.example.wordlerick.ui.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.example.wordlerick.R
-import com.example.wordlerick.ui.screens.QuizQuestion
-import com.example.wordlerick.ui.screens.ShowCharacter
+import androidx.lifecycle.viewModelScope
+import com.example.wordlerick.api.Character
+import com.example.wordlerick.apiManager.ApiServiceImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
 
 @HiltViewModel
-class GameViewModel @Inject constructor() : ViewModel() {
-    // Mock list of all characters in the game
-    private val allCharacters = listOf(
-        ShowCharacter(1, "Rick Sanchez", R.drawable.rick),
-        ShowCharacter(2, "Morty Smith", R.drawable.morty),
-        ShowCharacter(3, "Summer Smith", R.drawable.summer),
-        ShowCharacter(4, "Beth Smith", R.drawable.beth),
-        ShowCharacter(5, "Jerry Smith", R.drawable.jerry),
-        ShowCharacter(6, "Birdperson", R.drawable.birdperson),
-        ShowCharacter(7, "Squanchy", R.drawable.squanchy),
-        ShowCharacter(8, "Mr. Meeseeks", R.drawable.meeseeks),
-        ShowCharacter(9, "Evil Morty", R.drawable.morty),
-        ShowCharacter(10, "Mr. Poopybutthole", R.drawable.poopy)
-    )
+class GameViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val apiService: ApiServiceImpl
+) : ViewModel() {
 
-    // Game state
     private val _currentQuestionIndex = MutableStateFlow(0)
     val currentQuestionIndex: StateFlow<Int> = _currentQuestionIndex.asStateFlow()
 
@@ -49,27 +41,51 @@ class GameViewModel @Inject constructor() : ViewModel() {
     private val _questionsList = MutableStateFlow<List<QuizQuestion>>(emptyList())
     val questionsList: StateFlow<List<QuizQuestion>> = _questionsList.asStateFlow()
 
+    private val _loading = MutableStateFlow(true)
+    val loading: StateFlow<Boolean> = _loading.asStateFlow()
+
+    private val _error = MutableStateFlow(false)
+    val error: StateFlow<Boolean> = _error.asStateFlow()
+
     init {
-        prepareQuestions()
+        loadCharacters()
     }
 
-    private fun prepareQuestions() {
-        val shuffledCharacters = allCharacters.shuffled()
+    private fun loadCharacters() {
+        _loading.value = true
+        apiService.getCharacters(
+            context = context,
+            onSuccess = { characters ->
+                viewModelScope.launch {
+                    prepareQuestions(characters)
+                    _loading.value = false
+                }
+            },
+            onFail = {
+                _error.value = true
+                _loading.value = false
+            },
+            loadingFinished = {
+                // manejado con el onSuccess/onFail
+            }
+        )
+    }
+
+    private fun prepareQuestions(characters: List<Character>) {
+        val shuffledCharacters = characters.shuffled()
         val newQuestions = mutableListOf<QuizQuestion>()
 
-        for (i in 0 until 10) {
+        for (i in 0 until minOf(10, shuffledCharacters.size)) {
             val correctCharacter = shuffledCharacters[i]
 
-            // Generate 3 wrong options
-            val wrongOptions = (allCharacters - correctCharacter).shuffled().take(3).map { it.name }
+            val wrongOptions = (characters - correctCharacter).shuffled().take(3).map { it.name }
 
-            // Create options with correct answer in random position
             val options = wrongOptions.toMutableList()
             options.add(Random.nextInt(0, 4), correctCharacter.name)
 
             newQuestions.add(
                 QuizQuestion(
-                    characterImageResId = correctCharacter.imageResId,
+                    characterImage = correctCharacter.image,
                     options = options,
                     correctAnswer = correctCharacter.name
                 )
@@ -98,7 +114,7 @@ class GameViewModel @Inject constructor() : ViewModel() {
         _selectedOption.value = null
         _isAnswerLocked.value = false
 
-        if (_currentQuestionIndex.value < 9) {
+        if (_currentQuestionIndex.value < _questionsList.value.size - 1) {
             _currentQuestionIndex.value++
         } else {
             _gameOver.value = true
@@ -111,6 +127,12 @@ class GameViewModel @Inject constructor() : ViewModel() {
         _gameOver.value = false
         _isAnswerLocked.value = false
         _selectedOption.value = null
-        prepareQuestions()
+        loadCharacters()
     }
-} 
+}
+
+data class QuizQuestion(
+    val characterImage: String,
+    val options: List<String>,
+    val correctAnswer: String
+) 

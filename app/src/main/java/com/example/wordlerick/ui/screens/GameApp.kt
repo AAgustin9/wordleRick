@@ -1,14 +1,16 @@
 package com.example.wordlerick.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wordlerick.ui.components.QuizHeader
 import com.example.wordlerick.ui.components.QuestionCard
 import com.example.wordlerick.ui.components.AnswerOptions
@@ -19,8 +21,10 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
 
 @Composable
-fun GameApp(viewModel: GameViewModel = viewModel()) {
+fun GameApp(viewModel: GameViewModel = hiltViewModel()) {
     val gameOver by viewModel.gameOver.collectAsState()
+    val loading by viewModel.loading.collectAsState()
+    val error by viewModel.error.collectAsState()
     
     Box(
         modifier = Modifier
@@ -28,20 +32,47 @@ fun GameApp(viewModel: GameViewModel = viewModel()) {
             .background(Color.White),
         contentAlignment = Alignment.Center
     ) {
-        if (gameOver) {
-            val score by viewModel.score.collectAsState()
-            GameResults(
-                score = score,
-                onRestart = { viewModel.restartGame() }
-            )
-        } else {
-            GameScreen(viewModel = viewModel)
+        when {
+            loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(48.dp),
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+            error -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Error loading characters",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(
+                        onClick = { viewModel.restartGame() }
+                    ) {
+                        Text("Retry")
+                    }
+                }
+            }
+            gameOver -> {
+                val score by viewModel.score.collectAsState()
+                GameResults(
+                    score = score,
+                    onRestart = { viewModel.restartGame() }
+                )
+            }
+            else -> {
+                GameScreen(viewModel = viewModel)
+            }
         }
     }
 }
 
 @Composable
-fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = viewModel()) {
+fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = hiltViewModel()) {
     val currentQuestion = viewModel.getCurrentQuestion()
     val coroutineScope = rememberCoroutineScope()
     val selectedOption by viewModel.selectedOption.collectAsState()
@@ -56,12 +87,12 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = viewMod
         val score by viewModel.score.collectAsState()
         QuizHeader(
             questionNumber = currentQuestionIndex + 1,
-            totalQuestions = 10,
+            totalQuestions = viewModel.questionsList.value.size,
             score = score
         )
 
         QuestionCard(
-            imageResId = currentQuestion.characterImageResId,
+            imageUrl = currentQuestion.characterImage,
             question = "Who is this character?"
         )
 

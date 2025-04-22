@@ -1,54 +1,46 @@
 package com.example.wordlerick.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.wordlerick.ui.theme.DarkBlue
+import coil3.compose.AsyncImage
 
 @Composable
-fun QuestionCard(imageResId: Int, question: String) {
+fun QuestionCard(
+    imageUrl: String,
+    question: String
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth(0.9f)
-            .padding(8.dp),
-        colors = CardDefaults.cardColors(containerColor = DarkBlue),
-        shape = RoundedCornerShape(16.dp)
+            .padding(vertical = 16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(12.dp)
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = "Character Image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(200.dp)
+                    .padding(bottom = 16.dp)
+            )
+            
             Text(
                 text = question,
-                fontSize = 20.sp,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 16.dp).fillMaxWidth()
+                fontSize = 24.sp
             )
-            Card(
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.padding(6.dp),
-                colors = CardDefaults.cardColors(containerColor = DarkBlue)
-            ) {
-                Image(
-                    painter = painterResource(id = imageResId),
-                    contentDescription = "Character Image",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(250.dp)
-                )
-            }
         }
     }
 }
