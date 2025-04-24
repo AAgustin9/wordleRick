@@ -46,8 +46,8 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
 
         // Name
         Text(
-            text = userProfile.name,
-            style = MaterialTheme.typography.headlineMedium,
+            text = "WORK IN PROGRESS-RICK", //userProfile.name,
+            style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -55,7 +55,7 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
         // Email
         Text(
             text = userProfile.email,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 

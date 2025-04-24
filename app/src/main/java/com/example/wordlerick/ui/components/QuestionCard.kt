@@ -23,9 +23,17 @@ fun QuestionCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+            Text(
+                text = question,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+            )
+
             AsyncImage(
                 model = imageUrl,
                 contentDescription = "Character Image",
@@ -34,13 +42,7 @@ fun QuestionCard(
                     .size(200.dp)
                     .padding(bottom = 16.dp)
             )
-            
-            Text(
-                text = question,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            )
+
         }
     }
 }

@@ -6,6 +6,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +21,7 @@ import com.example.wordlerick.ui.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 
 @Composable
 fun GameApp(viewModel: GameViewModel = hiltViewModel()) {
@@ -80,6 +83,8 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = hiltVie
     val correctAnswer by viewModel.correctAnswer.collectAsState()
     val currentQuestionIndex by viewModel.currentQuestionIndex.collectAsState()
 
+    var answerRevealed by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -92,15 +97,16 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = hiltVie
         )
 
         QuestionCard(
+            question = "Who is this character?",
             imageUrl = currentQuestion.characterImage,
-            question = "Who is this character?"
         )
 
         AnswerOptions(
             options = currentQuestion.options,
             selectedOption = selectedOption,
-            correctAnswer = if (isAnswerLocked) correctAnswer else null,
+            correctAnswer = if (isAnswerLocked && answerRevealed) correctAnswer else null,
             onOptionSelected = { option ->
+                answerRevealed = true
                 viewModel.checkAnswer(option)
                 coroutineScope.launch {
                     delay(1500)
