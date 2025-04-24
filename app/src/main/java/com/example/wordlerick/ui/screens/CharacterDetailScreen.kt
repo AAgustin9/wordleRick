@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import com.example.wordlerick.api.Character
 import coil3.compose.rememberAsyncImagePainter
 
@@ -27,9 +29,16 @@ fun CharacterDetailScreen(
                 title = { Text(character.name) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
-                        Text("←")
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                )
             )
         }
     ) { paddingValues ->
@@ -79,7 +88,7 @@ private fun CharacterInfoRow(label: String, value: String) {
         Text(
             text = label,
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSecondary
         )
         Text(
             text = value,
