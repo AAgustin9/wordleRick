@@ -35,8 +35,8 @@ class GameViewModel @Inject constructor(
     private val _selectedOption = MutableStateFlow<String?>(null)
     val selectedOption: StateFlow<String?> = _selectedOption.asStateFlow()
 
-    private val _correctAnswer = MutableStateFlow("")
-    val correctAnswer: StateFlow<String> = _correctAnswer.asStateFlow()
+    private val _correctAnswer = MutableStateFlow<String?>(null)
+    val correctAnswer: StateFlow<String?> = _correctAnswer.asStateFlow()
 
     private val _questionsList = MutableStateFlow<List<QuizQuestion>>(emptyList())
     val questionsList: StateFlow<List<QuizQuestion>> = _questionsList.asStateFlow()
@@ -112,6 +112,7 @@ class GameViewModel @Inject constructor(
 
     fun moveToNextQuestion() {
         _selectedOption.value = null
+        _correctAnswer.value = null
         _isAnswerLocked.value = false
 
         if (_currentQuestionIndex.value < _questionsList.value.size - 1) {
@@ -127,6 +128,7 @@ class GameViewModel @Inject constructor(
         _gameOver.value = false
         _isAnswerLocked.value = false
         _selectedOption.value = null
+        _correctAnswer.value = null
         loadCharacters()
     }
 }

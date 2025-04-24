@@ -83,8 +83,6 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = hiltVie
     val correctAnswer by viewModel.correctAnswer.collectAsState()
     val currentQuestionIndex by viewModel.currentQuestionIndex.collectAsState()
 
-    var answerRevealed by remember { mutableStateOf(false) }
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -97,16 +95,15 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = hiltVie
         )
 
         QuestionCard(
-            question = "Who is this character?",
             imageUrl = currentQuestion.characterImage,
+            question = "Who is this character?"
         )
 
         AnswerOptions(
             options = currentQuestion.options,
             selectedOption = selectedOption,
-            correctAnswer = if (isAnswerLocked && answerRevealed) correctAnswer else null,
+            correctAnswer = if (isAnswerLocked) correctAnswer else null,
             onOptionSelected = { option ->
-                answerRevealed = true
                 viewModel.checkAnswer(option)
                 coroutineScope.launch {
                     delay(1500)

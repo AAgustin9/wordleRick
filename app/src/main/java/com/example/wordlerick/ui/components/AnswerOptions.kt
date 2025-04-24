@@ -36,7 +36,10 @@ fun AnswerOptions(
             Button(
                 onClick = { onOptionSelected(option) },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = backgroundColor,
+                    disabledContainerColor = backgroundColor
+                ),
                 enabled = correctAnswer == null
             ) {
                 Text(
