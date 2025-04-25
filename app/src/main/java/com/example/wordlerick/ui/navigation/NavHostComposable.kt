@@ -9,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +17,7 @@ import com.example.wordlerick.ui.screens.CharacterDetailScreen
 import com.example.wordlerick.ui.screens.GameApp
 import com.example.wordlerick.ui.screens.UserScreen
 import com.example.wordlerick.ui.screens.WikiScreen
+import com.example.wordlerick.ui.theme.sizeBig1
 
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
@@ -26,7 +26,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
     NavHost(
         navController = navController,
         startDestination = WordleRickScreen.Home.name,
-        modifier = Modifier.fillMaxSize().padding(innerPadding).padding(20.dp)
+        modifier = Modifier.fillMaxSize().padding(innerPadding).padding(sizeBig1)
     ) {
         composable(route = WordleRickScreen.Home.name) {
             GameApp()

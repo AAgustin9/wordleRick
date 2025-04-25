@@ -9,10 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.wordlerick.ui.theme.DarkBlue
+import com.example.wordlerick.ui.theme.biggerIntermediate
+import com.example.wordlerick.ui.theme.defaultSize
+import com.example.wordlerick.ui.theme.halfDefault
+import com.example.wordlerick.ui.theme.size24
+import com.example.wordlerick.ui.theme.sizeBig1
+import com.example.wordlerick.ui.theme.sizeExtraBig
 
 @Composable
 fun QuestionCard(
@@ -22,21 +26,21 @@ fun QuestionCard(
     Card(
         modifier = Modifier
             .fillMaxWidth(0.9f)
-            .padding(vertical = 16.dp),
+            .padding(vertical = defaultSize),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        shape = RoundedCornerShape(16.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = halfDefault),
+        shape = RoundedCornerShape(defaultSize)
     ) {
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(sizeBig1),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(defaultSize),
         ) {
             Text(
                 text = question,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
+                fontSize = size24,
                 color = DarkBlue
             )
 
@@ -45,9 +49,9 @@ fun QuestionCard(
                 contentDescription = "Character Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(200.dp)
-                    .padding(bottom = 16.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .size(sizeExtraBig)
+                    .padding(bottom = defaultSize)
+                    .clip(RoundedCornerShape(biggerIntermediate))
             )
 
         }

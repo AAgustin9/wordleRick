@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -18,7 +17,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.wordlerick.api.ApiViewModel
 import com.example.wordlerick.api.Character
 import coil3.compose.rememberAsyncImagePainter
-import androidx.compose.material3.TextFieldDefaults
+import com.example.wordlerick.ui.theme.defaultSize
+import com.example.wordlerick.ui.theme.halfDefault
+import com.example.wordlerick.ui.theme.sizeBig5
 
 @Composable
 fun WikiScreen(
@@ -30,12 +31,12 @@ fun WikiScreen(
     val loading by viewModel.loading.collectAsStateWithLifecycle()
     val showRetry by viewModel.showRetry.collectAsStateWithLifecycle()
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier.fillMaxSize().padding(defaultSize)) {
         SearchBar(searchQuery) { newQuery ->
             searchQuery = newQuery
             viewModel.filterCharacters(newQuery.text)
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(defaultSize))
         
         if (loading) {
             CircularProgressIndicator(
@@ -65,7 +66,7 @@ fun SearchBar(searchQuery: TextFieldValue, onQueryChange: (TextFieldValue) -> Un
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text("Search characters...") },
         singleLine = true,
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(halfDefault),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.primary,
             unfocusedBorderColor = MaterialTheme.colorScheme.outline
@@ -96,19 +97,19 @@ fun CharacterCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(halfDefault)
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(halfDefault),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Row(modifier = Modifier.padding(16.dp)) {
+        Row(modifier = Modifier.padding(defaultSize)) {
             Image(
                 painter = rememberAsyncImagePainter(character.image),
                 contentDescription = "Character Image",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(64.dp)
+                modifier = Modifier.size(sizeBig5)
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(defaultSize))
             Column {
                 Text(text = character.name, style = MaterialTheme.typography.bodyLarge)
                 Text(

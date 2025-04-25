@@ -10,12 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import com.example.wordlerick.api.Character
 import coil3.compose.rememberAsyncImagePainter
+import com.example.wordlerick.ui.theme.defaultSize
+import com.example.wordlerick.ui.theme.halfDefault
+import com.example.wordlerick.ui.theme.sizeExtraBig
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +49,7 @@ fun CharacterDetailScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+                .padding(defaultSize),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -55,18 +57,18 @@ fun CharacterDetailScreen(
                 contentDescription = "Character Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(200.dp)
-                    .padding(bottom = 16.dp)
+                    .size(sizeExtraBig)
+                    .padding(bottom = defaultSize)
             )
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(halfDefault),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier.padding(defaultSize),
+                    verticalArrangement = Arrangement.spacedBy(halfDefault)
                 ) {
                     CharacterInfoRow("Status", if (character.alive) "Alive" else "Dead")
                     CharacterInfoRow("Species", character.species)

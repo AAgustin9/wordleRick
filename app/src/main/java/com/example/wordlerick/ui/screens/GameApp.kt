@@ -6,12 +6,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wordlerick.ui.components.QuizHeader
 import com.example.wordlerick.ui.components.QuestionCard
@@ -21,7 +18,8 @@ import com.example.wordlerick.ui.viewmodels.GameViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import com.example.wordlerick.ui.theme.defaultSize
+import com.example.wordlerick.ui.theme.sizeBig3
 
 @Composable
 fun GameApp(viewModel: GameViewModel = hiltViewModel()) {
@@ -38,7 +36,7 @@ fun GameApp(viewModel: GameViewModel = hiltViewModel()) {
         when {
             loading -> {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(48.dp),
+                    modifier = Modifier.size(sizeBig3),
                     color = MaterialTheme.colorScheme.primary
                 )
             }
@@ -52,7 +50,7 @@ fun GameApp(viewModel: GameViewModel = hiltViewModel()) {
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.error
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(defaultSize))
                     Button(
                         onClick = { viewModel.restartGame() }
                     ) {

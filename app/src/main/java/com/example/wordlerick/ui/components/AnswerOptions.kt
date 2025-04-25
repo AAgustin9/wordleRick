@@ -5,11 +5,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.wordlerick.ui.theme.CorrectGreen
 import com.example.wordlerick.ui.theme.DarkBlue
 import com.example.wordlerick.ui.theme.IncorrectRed
+import com.example.wordlerick.ui.theme.halfDefault
+import com.example.wordlerick.ui.theme.size18
 
 @Composable
 fun AnswerOptions(
@@ -21,8 +21,8 @@ fun AnswerOptions(
     Column(
         modifier = Modifier
             .fillMaxWidth(0.9f)
-            .padding(vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(vertical = halfDefault),
+        verticalArrangement = Arrangement.spacedBy(halfDefault)
     ) {
         options.forEach { option ->
             val isSelected = option == selectedOption
@@ -44,9 +44,9 @@ fun AnswerOptions(
             ) {
                 Text(
                     text = option,
-                    fontSize = 18.sp,
+                    fontSize = size18,
                     color = Color.White,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(halfDefault)
                 )
             }
         }

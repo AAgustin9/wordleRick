@@ -18,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import com.example.wordlerick.ui.theme.size24
+import com.example.wordlerick.ui.theme.sizeBig3
+import com.example.wordlerick.ui.theme.sizeBig4
+import com.example.wordlerick.ui.theme.smallerIntermediate
 
 @Composable
 fun Api() {
@@ -32,13 +34,13 @@ fun Api() {
     val retry by viewModel.showRetry.collectAsStateWithLifecycle()
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(smallerIntermediate),
         modifier = Modifier.verticalScroll(rememberScrollState()),
     ) {
         if (loading) {
             CircularProgressIndicator(
                 color = Color.Gray,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(sizeBig3)
             )
         } else if (retry) {
             Text(
@@ -75,14 +77,14 @@ fun CharacterCard(
                 model = character.image,
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(60.dp),
+                modifier = Modifier.size(sizeBig4),
             )
             Spacer(
-                modifier = Modifier.size(10.dp)
+                modifier = Modifier.size(smallerIntermediate)
             )
             Text(
                 text = character.name,
-                fontSize = 24.sp
+                fontSize = size24
             )
         }
         if(!character.alive) {
