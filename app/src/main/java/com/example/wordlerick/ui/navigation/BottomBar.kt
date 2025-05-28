@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Badge
@@ -18,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Person
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wordlerick.ui.viewmodels.NavigationViewModel
@@ -32,8 +34,9 @@ fun BottomBar(
     val homeTab = TabBarItem(title = WordleRickScreen.Home.name, selectedIcon = Icons.Filled.Home, unselectedIcon = Icons.Outlined.Home)
     val rankingTab = TabBarItem(title = WordleRickScreen.Wiki.name, selectedIcon = Icons.Filled.Info, unselectedIcon = Icons.Outlined.Info)
     val profileTab = TabBarItem(title = WordleRickScreen.User.name, selectedIcon = Icons.Filled.Person, unselectedIcon = Icons.Outlined.Person)
+    val leaderboardTab = TabBarItem(title = WordleRickScreen.Leaderboard.name, selectedIcon = Icons.Filled.List, unselectedIcon = Icons.Outlined.List)
 
-    val tabBarItems = listOf(homeTab, rankingTab, profileTab)
+    val tabBarItems = listOf(homeTab, rankingTab, leaderboardTab, profileTab)
 
     TabView(tabBarItems, selectedTabIndex, onNavigate, viewModel)
 }

@@ -10,11 +10,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.wordlerick.ui.components.QuizHeader
 import com.example.wordlerick.ui.components.QuestionCard
 import com.example.wordlerick.ui.components.AnswerOptions
 import com.example.wordlerick.ui.components.GameResults
+import com.example.wordlerick.ui.screens.SaveScoreScreen
+import com.example.wordlerick.ui.navigation.WordleRickScreen
 import com.example.wordlerick.ui.viewmodels.GameViewModel
+import com.example.wordlerick.ui.viewmodels.LeaderboardViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
@@ -22,7 +26,10 @@ import com.example.wordlerick.ui.theme.defaultSize
 import com.example.wordlerick.ui.theme.sizeBig3
 
 @Composable
-fun GameApp(viewModel: GameViewModel = hiltViewModel()) {
+fun GameApp(
+    navController: NavHostController,
+    viewModel: GameViewModel = hiltViewModel()
+) {
     val gameOver by viewModel.gameOver.collectAsState()
     val loading by viewModel.loading.collectAsState()
     val error by viewModel.error.collectAsState()
@@ -60,8 +67,13 @@ fun GameApp(viewModel: GameViewModel = hiltViewModel()) {
             }
             gameOver -> {
                 val score by viewModel.score.collectAsState()
-                GameResults(
+                val leaderboardViewModel: LeaderboardViewModel = hiltViewModel()
+                SaveScoreScreen(
                     score = score,
+                    onSave = { playerName ->
+                        leaderboardViewModel.insertEntry(playerName, score)
+                        navController.navigate(WordleRickScreen.Leaderboard.name)
+                    },
                     onRestart = { viewModel.restartGame() }
                 )
             }
@@ -80,6 +92,7 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = hiltVie
     val isAnswerLocked by viewModel.isAnswerLocked.collectAsState()
     val correctAnswer by viewModel.correctAnswer.collectAsState()
     val currentQuestionIndex by viewModel.currentQuestionIndex.collectAsState()
+    val questionsList by viewModel.questionsList.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -88,7 +101,7 @@ fun GameScreen(modifier: Modifier = Modifier, viewModel: GameViewModel = hiltVie
         val score by viewModel.score.collectAsState()
         QuizHeader(
             questionNumber = currentQuestionIndex + 1,
-            totalQuestions = viewModel.questionsList.value.size,
+            totalQuestions = questionsList.size,
             score = score
         )
 

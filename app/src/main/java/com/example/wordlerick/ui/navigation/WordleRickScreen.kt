@@ -4,6 +4,7 @@ enum class WordleRickScreen {
     Home,
     Wiki,
     User,
+    Leaderboard,
 
     API,
 }
