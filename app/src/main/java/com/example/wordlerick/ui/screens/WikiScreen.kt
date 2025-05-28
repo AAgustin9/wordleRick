@@ -100,7 +100,7 @@ fun CharacterCard(
             .padding(halfDefault)
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(halfDefault),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Row(modifier = Modifier.padding(defaultSize)) {
             Image(

@@ -41,7 +41,7 @@ fun QuestionCard(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 fontSize = size24,
-                color = DarkBlue
+                color = MaterialTheme.colorScheme.primary
             )
 
             AsyncImage(
