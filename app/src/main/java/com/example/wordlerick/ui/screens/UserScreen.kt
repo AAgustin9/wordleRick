@@ -17,10 +17,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wordlerick.R
 import com.example.wordlerick.ui.viewmodels.UserViewModel
+import androidx.compose.ui.platform.LocalContext
+import androidx.fragment.app.FragmentActivity
+import com.example.wordlerick.security.BiometricAuthManager
+import android.widget.Toast
 
 @Composable
 fun UserScreen(viewModel: UserViewModel = viewModel()) {
     val userProfile by viewModel.userProfile.collectAsState()
+
+    // create our biometric auth manager
+    val context = LocalContext.current
+    val activity = remember { context as FragmentActivity }
+    val biometricAuthManager = remember { BiometricAuthManager() }
 
     Column(
         modifier = Modifier
@@ -97,6 +106,19 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }
+        }
+
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
+
+        Button(onClick = {
+            biometricAuthManager.authenticate(
+                context = activity,
+                onError =   { Toast.makeText(context, "Authentication error", Toast.LENGTH_SHORT).show() },
+                onFail =    { Toast.makeText(context, "Authentication failed", Toast.LENGTH_SHORT).show() },
+                onSuccess = { Toast.makeText(context, "Authenticated!", Toast.LENGTH_SHORT).show() }
+            )
+        }) {
+            Text("Authenticate Biometrics")
         }
     }
 }
