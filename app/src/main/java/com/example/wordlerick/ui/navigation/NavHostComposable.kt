@@ -19,7 +19,10 @@ import com.example.wordlerick.ui.screens.LeaderboardScreen
 import com.example.wordlerick.ui.screens.UserScreen
 import com.example.wordlerick.ui.screens.WikiScreen
 import com.example.wordlerick.ui.theme.sizeBig1
+import android.os.Build
+import androidx.annotation.RequiresApi
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
     var selectedCharacter by remember { mutableStateOf<Character?>(null) }

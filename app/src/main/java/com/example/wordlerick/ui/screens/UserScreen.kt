@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.FragmentActivity
 import com.example.wordlerick.security.BiometricAuthManager
 import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 
 @Composable
 fun UserScreen(viewModel: UserViewModel = viewModel()) {
@@ -31,94 +32,104 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
     val activity = remember { context as FragmentActivity }
     val biometricAuthManager = remember { BiometricAuthManager() }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.spacing_16)),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Profile Picture
-        Card(
-            modifier = Modifier.size(dimensionResource(id = R.dimen.profile_picture_size)),
-            shape = CircleShape
-        ) {
-            Image(
-                painter = painterResource(id = userProfile.profilePicture),
-                contentDescription = stringResource(id = R.string.profile_picture),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        }
-
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_16)))
-
-        // Name
-        Text(
-            text = "WORK IN PROGRESS-RICK", //userProfile.name,
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface
+    // trigger biometric auth on enter
+    var isAuthenticated by remember { mutableStateOf(false) }
+    var authMessage by remember { mutableStateOf("Authenticating…") }
+    LaunchedEffect(Unit) {
+        biometricAuthManager.authenticate(
+            context = activity,
+            onError = { authMessage = "Authentication error" },
+            onFail = { authMessage = "Authentication failed" },
+            onSuccess = { isAuthenticated = true }
         )
+    }
 
-        // Email
-        Text(
-            text = userProfile.email,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
-
-        // Location
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+    if (!isAuthenticated) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(dimensionResource(id = R.dimen.spacing_16)),
+            contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = userProfile.location,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Text(authMessage, style = MaterialTheme.typography.bodyLarge)
         }
-
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
-
-        // Bio
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(dimensionResource(id = R.dimen.spacing_16)),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.card_padding))
+            // Profile Picture
+            Card(
+                modifier = Modifier.size(dimensionResource(id = R.dimen.profile_picture_size)),
+                shape = CircleShape
             ) {
-                Text(
-                    text = stringResource(id = R.string.about),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_8)))
-                Text(
-                    text = userProfile.bio,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface
+                Image(
+                    painter = painterResource(id = userProfile.profilePicture),
+                    contentDescription = stringResource(id = R.string.profile_picture),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
                 )
             }
-        }
 
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_16)))
 
-        Button(onClick = {
-            biometricAuthManager.authenticate(
-                context = activity,
-                onError =   { Toast.makeText(context, "Authentication error", Toast.LENGTH_SHORT).show() },
-                onFail =    { Toast.makeText(context, "Authentication failed", Toast.LENGTH_SHORT).show() },
-                onSuccess = { Toast.makeText(context, "Authenticated!", Toast.LENGTH_SHORT).show() }
+            // Name
+            Text(
+                text = "WORK IN PROGRESS-RICK", //userProfile.name,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
-        }) {
-            Text("Authenticate Biometrics")
+
+            // Email
+            Text(
+                text = userProfile.email,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
+
+            // Location
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = userProfile.location,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
+
+            // Bio
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(dimensionResource(id = R.dimen.card_padding))
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.about),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_8)))
+                    Text(
+                        text = userProfile.bio,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
         }
     }
 }
