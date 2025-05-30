@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
     id("kotlin-kapt")
 }
 
@@ -41,6 +42,7 @@ android {
     }
     lintOptions {
         disable += "FlowOperatorInvokedInComposition"
+        disable += "NewApi"
     }
 }
 
@@ -72,6 +74,11 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.1")
 
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+    implementation("com.google.firebase:firebase-analytics")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

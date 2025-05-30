@@ -7,7 +7,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -22,6 +21,14 @@ import androidx.fragment.app.FragmentActivity
 import com.example.wordlerick.security.BiometricAuthManager
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
 @Composable
 fun UserScreen(viewModel: UserViewModel = viewModel()) {
@@ -43,6 +50,40 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
             onSuccess = { isAuthenticated = true }
         )
     }
+
+    // --- Google Sign-In setup ---
+    var googleAccount by remember { mutableStateOf<GoogleSignInAccount?>(GoogleSignIn.getLastSignedInAccount(context)) }
+    val gso by remember {
+        mutableStateOf(
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+        )
+    }
+    val googleSignInClient by remember { mutableStateOf(GoogleSignIn.getClient(activity, gso)) }
+    val googleLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            // Exchange ID token for Firebase credential
+            val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+            FirebaseAuth.getInstance().signInWithCredential(credential)
+                .addOnCompleteListener(activity) { authTask ->
+                    if (authTask.isSuccessful) {
+                        googleAccount = account
+                        Toast.makeText(context, "Signed in as ${account.displayName}", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Firebase auth failed: ${authTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        } catch (e: ApiException) {
+            Toast.makeText(context, "Google sign in failed: ${e.statusCode}", Toast.LENGTH_SHORT).show()
+        }
+    }
+    // --- end Google Sign-In setup ---
 
     if (!isAuthenticated) {
         Box(
@@ -129,6 +170,18 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
+            }
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_24)))
+            if (googleAccount == null) {
+                Button(onClick = { googleLauncher.launch(googleSignInClient.signInIntent) }) {
+                    Text("Sign in with Google")
+                }
+            } else {
+                Text(
+                    text = "Welcome, ${googleAccount?.displayName}",
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         }
     }
