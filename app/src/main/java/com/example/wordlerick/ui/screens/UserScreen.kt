@@ -29,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import coil.compose.AsyncImage
 
 @Composable
 fun UserScreen(viewModel: UserViewModel = viewModel()) {
@@ -101,24 +102,35 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
                 .padding(dimensionResource(id = R.dimen.spacing_16)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Profile Picture
+            // Profile Picture (use Google photo if available)
             Card(
                 modifier = Modifier.size(dimensionResource(id = R.dimen.profile_picture_size)),
                 shape = CircleShape
             ) {
-                Image(
-                    painter = painterResource(id = userProfile.profilePicture),
-                    contentDescription = stringResource(id = R.string.profile_picture),
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
+                // Safely unwrap the Uri for smart-casting
+                val photoUri = googleAccount?.photoUrl
+                if (photoUri != null) {
+                    AsyncImage(
+                        model = photoUri,
+                        contentDescription = stringResource(id = R.string.profile_picture),
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = userProfile.profilePicture),
+                        contentDescription = stringResource(id = R.string.profile_picture),
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_16)))
 
             // Name
             Text(
-                text = "WORK IN PROGRESS-RICK", //userProfile.name,
+                text = googleAccount?.displayName ?: userProfile.name,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
@@ -126,7 +138,7 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
 
             // Email
             Text(
-                text = userProfile.email,
+                text = googleAccount?.email ?: userProfile.email,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -182,6 +194,16 @@ fun UserScreen(viewModel: UserViewModel = viewModel()) {
                     text = "Welcome, ${googleAccount?.displayName}",
                     style = MaterialTheme.typography.titleMedium
                 )
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_16)))
+                Button(onClick = {
+                    // Sign out of Google and Firebase
+                    googleSignInClient.signOut()
+                    FirebaseAuth.getInstance().signOut()
+                    googleAccount = null
+                    Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show()
+                }) {
+                    Text("Log out")
+                }
             }
         }
     }

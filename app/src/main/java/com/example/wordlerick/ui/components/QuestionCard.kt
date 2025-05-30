@@ -9,8 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import coil3.compose.AsyncImage
-import com.example.wordlerick.ui.theme.DarkBlue
+import coil.compose.AsyncImage
 import com.example.wordlerick.ui.theme.biggerIntermediate
 import com.example.wordlerick.ui.theme.defaultSize
 import com.example.wordlerick.ui.theme.halfDefault

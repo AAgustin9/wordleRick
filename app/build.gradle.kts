@@ -58,8 +58,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
 
-    implementation("io.coil-kt.coil3:coil-compose:3.0.0")
-    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0")
+    // Use Coil 2.x for Compose and OkHttp support
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.google.dagger:hilt-android:2.49")

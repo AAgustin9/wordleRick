@@ -14,7 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import com.example.wordlerick.api.Character
-import coil3.compose.rememberAsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.example.wordlerick.ui.theme.defaultSize
 import com.example.wordlerick.ui.theme.halfDefault
 import com.example.wordlerick.ui.theme.sizeExtraBig
