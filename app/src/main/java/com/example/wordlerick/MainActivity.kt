@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentActivity
@@ -26,6 +27,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.example.wordlerick.ui.screens.GameApp
 import com.google.firebase.FirebaseApp
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
@@ -46,11 +50,17 @@ class MainActivity : FragmentActivity() {
                                 .padding(8.dp),
                             horizontalArrangement = Arrangement.End
                         ) {
-                            Text(text = if (isDarkTheme) "Dark" else "Light")
-                            Switch(
-                                checked = isDarkTheme,
-                                onCheckedChange = { themeViewModel.toggleTheme() }
-                            )
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(top = 8.dp)
+                            ) {
+                                Text(text = if (isDarkTheme) "Dark" else "Light")
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Switch(
+                                    checked = isDarkTheme,
+                                    onCheckedChange = { themeViewModel.toggleTheme() }
+                                )
+                            }
                         }
                     },
                     containerColor = MaterialTheme.colorScheme.background,
