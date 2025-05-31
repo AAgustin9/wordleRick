@@ -30,11 +30,14 @@ import com.google.firebase.FirebaseApp
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import com.example.wordlerick.notifications.NotificationHelper
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Schedule daily reminder notification
+        NotificationHelper(this).scheduleReminder(intervalMillis = 60_000L)
         FirebaseApp.initializeApp(this)
         enableEdgeToEdge()
         setContent {
