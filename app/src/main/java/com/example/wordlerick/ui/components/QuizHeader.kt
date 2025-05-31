@@ -24,13 +24,13 @@ fun QuizHeader(questionNumber: Int, totalQuestions: Int, score: Int) {
                 text = "Question",
                 fontSize = size18,
                 fontWeight = FontWeight.Bold,
-                color = DarkBlue
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = "$questionNumber/$totalQuestions",
                 fontSize = size22,
                 fontWeight = FontWeight.Bold,
-                color = DarkBlue
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
 
@@ -39,7 +39,7 @@ fun QuizHeader(questionNumber: Int, totalQuestions: Int, score: Int) {
                 text = "Score",
                 fontSize = size18,
                 fontWeight = FontWeight.Bold,
-                color = DarkBlue
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = "$score",

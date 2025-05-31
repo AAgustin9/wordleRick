@@ -8,7 +8,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.layout.ContentScale
@@ -16,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.wordlerick.api.ApiViewModel
 import com.example.wordlerick.api.Character
-import coil3.compose.rememberAsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.example.wordlerick.ui.theme.defaultSize
 import com.example.wordlerick.ui.theme.halfDefault
 import com.example.wordlerick.ui.theme.sizeBig5
@@ -100,7 +99,7 @@ fun CharacterCard(
             .padding(halfDefault)
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(halfDefault),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Row(modifier = Modifier.padding(defaultSize)) {
             Image(

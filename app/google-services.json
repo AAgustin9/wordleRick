@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "270557646217",
+    "project_id": "wordlerick-c137",
+    "storage_bucket": "wordlerick-c137.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270557646217:android:bae0dd9fedd11d21ff2558",
+        "android_client_info": {
+          "package_name": "com.example.wordlerick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270557646217-lgf42irftr8tq892gk267493ar2to5jg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wordlerick",
+            "certificate_hash": "8fafb7cf770898bb8653b42f90e5e4dc362e4f83"
+          }
+        },
+        {
+          "client_id": "270557646217-6o72ft8nv223otqcaeond6gb79285ul7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1yNXbkMZYoJqRaCydkE3HwxVxQ4iOF7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270557646217-6o72ft8nv223otqcaeond6gb79285ul7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

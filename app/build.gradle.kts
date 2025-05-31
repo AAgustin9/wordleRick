@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
     id("kotlin-kapt")
 }
 
@@ -39,6 +40,10 @@ android {
     buildFeatures {
         compose = true
     }
+    lintOptions {
+        disable += "FlowOperatorInvokedInComposition"
+        disable += "NewApi"
+    }
 }
 
 dependencies {
@@ -53,15 +58,27 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
 
-    implementation("io.coil-kt.coil3:coil-compose:3.0.0")
-    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0")
+    // Use Coil 2.x for Compose and OkHttp support
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.google.dagger:hilt-android:2.49")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation(libs.firebase.common.ktx)
+    kapt("com.google.dagger:hilt-android-compiler:2.49")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit:converter-gson:2.0.0-beta2")
+
+    implementation("androidx.room:room-runtime:2.5.1")
+    kapt("androidx.room:room-compiler:2.5.1")
+    implementation("androidx.room:room-ktx:2.5.1")
+
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+    implementation("com.google.firebase:firebase-analytics")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

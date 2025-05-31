@@ -15,10 +15,14 @@ import androidx.navigation.compose.composable
 import com.example.wordlerick.api.Character
 import com.example.wordlerick.ui.screens.CharacterDetailScreen
 import com.example.wordlerick.ui.screens.GameApp
+import com.example.wordlerick.ui.screens.LeaderboardScreen
 import com.example.wordlerick.ui.screens.UserScreen
 import com.example.wordlerick.ui.screens.WikiScreen
 import com.example.wordlerick.ui.theme.sizeBig1
+import android.os.Build
+import androidx.annotation.RequiresApi
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
     var selectedCharacter by remember { mutableStateOf<Character?>(null) }
@@ -29,7 +33,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         modifier = Modifier.fillMaxSize().padding(innerPadding).padding(sizeBig1)
     ) {
         composable(route = WordleRickScreen.Home.name) {
-            GameApp()
+            GameApp(navController)
         }
 
         composable(route = WordleRickScreen.Wiki.name) {
@@ -51,6 +55,10 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
 
         composable(route = WordleRickScreen.User.name) {
             UserScreen()
+        }
+
+        composable(route = WordleRickScreen.Leaderboard.name) {
+            LeaderboardScreen()
         }
     }
 
